@@ -64,6 +64,7 @@ function App() {
 
 	const [itemDo, setDo] = useState([])
 	const [inputText, setText] = useState('')
+	const [id, setId] = useState(0)
 
 	return (
 		<Body>
@@ -72,14 +73,15 @@ function App() {
 			</Header>
 			<Main>
 				<Flex>
-					<TextArea value={inputText} onChange={event=> setText(event.target.value)} />
+					<TextArea value={inputText} onChange={event => setText(event.target.value)}/>
 					<AddButton onClick={() => {
-						setDo(prev => [...prev, inputText])
+						setDo(prev => [...prev, {id: id, text: inputText}])
+						setId(id + 1)
 						setText('')
 					}}>Add task</AddButton>
 				</Flex>
 				<CardWrapper>
-					{itemDo.map(elem => <Card do={elem}/>)}
+					{itemDo.map((elem) => <Card elem={elem} key={elem.id} method={setDo} itemDo={itemDo}/>)}
 				</CardWrapper>
 			</Main>
 		</Body>

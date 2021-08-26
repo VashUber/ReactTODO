@@ -4,13 +4,11 @@ import {createGlobalStyle} from "styled-components";
 import App from './App';
 
 const GlobalStyle = createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@600&display=swap');
-
   * {
     margin: 0;
     padding: 0;
     font-size: 1.08em;
-    font-family: 'Public Sans', sans-serif;
+    font-family: 'Overpass', sans-serif;
   }
 
   h1 {
