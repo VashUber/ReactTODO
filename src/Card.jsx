@@ -10,6 +10,10 @@ const CardItem = styled.div`
   padding: 8px;
   box-sizing: border-box;
   box-shadow: 6px 15px 20px 0 rgba(34, 60, 80, 0.2);
+  justify-self: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `
 
 const DeleteButton = styled.button`
@@ -24,13 +28,26 @@ const DeleteButton = styled.button`
   align-items: center;
 `
 
+const CardHeader = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  direction: rtl;
+`
+
+
 const Card = (props) => {
 	return (
 		<CardItem>
-			<h2>{props.elem.text}</h2>
-			<DeleteButton onClick={() => {
-				props.method(prev => [...prev.filter(elem => elem.id !== props.elem.id)])
-			}}>X</DeleteButton>
+			<CardHeader>
+				<DeleteButton onClick={() => {
+					props.method(prev => [...prev.filter(elem => elem.id !== props.elem.id)])
+					localStorage.setItem('tasks', JSON.stringify([...props.localStorageTask.filter(elem => elem.id !== props.elem.id)]))
+				}}>
+					<div>X</div>
+				</DeleteButton>
+				<h2>{props.elem.text}</h2>
+			</CardHeader>
+			<div>{props.elem.date}</div>
 		</CardItem>
 	)
 }

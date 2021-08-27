@@ -11,9 +11,9 @@ const Body = styled.div`
 const Header = styled.header`
   height: 70px;
   color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  text-align: center;
+  padding-top: 30px;
+  box-sizing: border-box;
 `
 
 const Main = styled.main`
@@ -23,8 +23,8 @@ const Main = styled.main`
 
 const CardWrapper = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 55px;
+  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  grid-gap: 20px;
 `
 
 const AddButton = styled.button`
@@ -61,11 +61,10 @@ const Flex = styled.div`
 `
 
 function App() {
-
-	const [itemDo, setDo] = useState([])
+	let localStorageTask = JSON.parse(localStorage.getItem('tasks'))
+	const [itemDo, setDo] = useState(localStorageTask ? localStorageTask : [])
 	const [inputText, setText] = useState('')
-	const [id, setId] = useState(0)
-
+	const [id, setId] = useState(+localStorage.getItem('id'))
 	return (
 		<Body>
 			<Header>
@@ -75,13 +74,23 @@ function App() {
 				<Flex>
 					<TextArea value={inputText} onChange={event => setText(event.target.value)}/>
 					<AddButton onClick={() => {
-						setDo(prev => [...prev, {id: id, text: inputText}])
-						setId(id + 1)
-						setText('')
+						if (inputText) {
+							let newTask = {
+								id: id,
+								text: inputText,
+								date: new Date().toLocaleString().slice(0, -3)
+							}
+							setDo(prev => [...prev, newTask])
+							setId(id + 1)
+							setText('')
+							localStorage.setItem('tasks', JSON.stringify([...itemDo, newTask]))
+							localStorage.setItem('id', (id + 1).toString())
+						}
 					}}>Add task</AddButton>
 				</Flex>
 				<CardWrapper>
-					{itemDo.map((elem) => <Card elem={elem} key={elem.id} method={setDo} itemDo={itemDo}/>)}
+					{itemDo.map((elem) => <Card elem={elem} key={elem.id} method={setDo}
+					                            localStorageTask={localStorageTask}/>)}
 				</CardWrapper>
 			</Main>
 		</Body>
