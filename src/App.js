@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import Card from "./Card";
 
@@ -65,6 +65,11 @@ function App() {
 	const [itemDo, setDo] = useState(localStorageTask ? localStorageTask : [])
 	const [inputText, setText] = useState('')
 	const [id, setId] = useState(+localStorage.getItem('id'))
+
+	useEffect(() => {
+		localStorage.setItem('tasks', JSON.stringify(itemDo))
+	}, [itemDo])
+
 	return (
 		<Body>
 			<Header>
@@ -80,17 +85,15 @@ function App() {
 								text: inputText,
 								date: new Date().toLocaleString().slice(0, -3)
 							}
+							localStorage.setItem('id', (id + 1).toString())
 							setDo(prev => [...prev, newTask])
 							setId(id + 1)
 							setText('')
-							localStorage.setItem('tasks', JSON.stringify([...itemDo, newTask]))
-							localStorage.setItem('id', (id + 1).toString())
 						}
 					}}>Add task</AddButton>
 				</Flex>
 				<CardWrapper>
-					{itemDo.map((elem) => <Card elem={elem} key={elem.id} method={setDo}
-					                            localStorageTask={localStorageTask}/>)}
+					{itemDo.map((elem) => <Card elem={elem} key={elem.id} method={setDo}/>)}
 				</CardWrapper>
 			</Main>
 		</Body>

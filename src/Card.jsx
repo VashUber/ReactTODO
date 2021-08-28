@@ -40,8 +40,7 @@ const Card = (props) => {
 		<CardItem>
 			<CardHeader>
 				<DeleteButton onClick={() => {
-					props.method(prev => [...prev.filter(elem => elem.id !== props.elem.id)])
-					localStorage.setItem('tasks', JSON.stringify([...props.localStorageTask.filter(elem => elem.id !== props.elem.id)]))
+					props.method(prev => prev.filter(elem => elem.id !== props.elem.id))
 				}}>
 					<div>X</div>
 				</DeleteButton>
