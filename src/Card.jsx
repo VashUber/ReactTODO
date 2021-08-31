@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import trash from './trash.png'
 
 const CardItem = styled.div`
   width: 330px;
@@ -20,12 +21,8 @@ const DeleteButton = styled.button`
   width: 45px;
   height: 45px;
   border-radius: 100%;
-  border: solid 3px #fd8181;
   background: none;
-  color: #fd8181;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  border: none;
 `
 
 const CardHeader = styled.div`
@@ -34,6 +31,12 @@ const CardHeader = styled.div`
   direction: rtl;
 `
 
+const DeleteIco = styled.img`
+  width: 45px;
+  height: 45px;
+  display: block;
+  -webkit-user-drag: none;
+`
 
 const Card = (props) => {
 	return (
@@ -42,7 +45,7 @@ const Card = (props) => {
 				<DeleteButton onClick={() => {
 					props.method(prev => prev.filter(elem => elem.id !== props.elem.id))
 				}}>
-					<div>X</div>
+					<DeleteIco src={trash} alt=""/>
 				</DeleteButton>
 				<h2>{props.elem.text}</h2>
 			</CardHeader>

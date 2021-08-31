@@ -20,6 +20,10 @@ const GlobalStyle = createGlobalStyle`
     font-size: 1.13em;
     height: 80px;
   }
+
+  ::placeholder {
+    color: rgba(255, 255, 255, 0.54);
+  }
 `
 
 ReactDOM.render(
